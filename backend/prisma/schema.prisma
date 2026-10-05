@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TicketStatus {
+  ABERTO
+  DIAGNOSTICO
+  ORCAMENTO
+  AGUARDANDO_APROVACAO
+  MANUTENCAO
+  FINALIZADO
+}
+
+enum Priority {
+  BAIXA
+  NORMAL
+  ALTA
+}
+
+enum ServiceMode {
+  PRESENCIAL
+  REMOTO
+}
+
+// Chamado de suporte. Por enquanto sem cliente/equipamento:
+// essas relações entram quando as tabelas User e Device existirem.
+model Ticket {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String
+  status      TicketStatus @default(ABERTO)
+  priority    Priority     @default(NORMAL)
+  mode        ServiceMode  @default(PRESENCIAL)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("tickets")
+}

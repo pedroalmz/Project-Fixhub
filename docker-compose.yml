@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:17
+    container_name: fixhub-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: fixhub
+      POSTGRES_PASSWORD: fixhub
+      POSTGRES_DB: fixhub
+    ports:
+      - "5432:5432"
+    volumes:
+      - fixhub-pgdata:/var/lib/postgresql/data
+
+volumes:
+  fixhub-pgdata:
